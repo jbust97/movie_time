@@ -1,10 +1,11 @@
     var Sequelize = require("sequelize"),    
     sequelize = null;
-    if (process.env.HEROKU_POSTGRESQL_BRONZE_URL) {
+    if (process.env.HEROKU) {
             // the application is executed on Heroku ... use the postgres
                 sequelize = new Sequelize(process.env.DATABASE_URL, 
                   {
                     dialect: 'postgres',
+                    protocol: 'postgres',
                     logging: false,
                     dialectOptions: {
                       ssl: true /* for SSL config since Heroku gives you this out of the box */
