@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const { Pool } = require('pg');
 const app = express();
-
+const db = require('./models');
 
 
 //db.sequelize.sync({alter: true});
@@ -21,7 +21,7 @@ app.get("/", (req, res) => {
 });
 app.get('/db', async (req, res) => {
     try {
-      const client = await pool.connect();
+      const client = await db.connect();
       const result = await client.query('SELECT * FROM test_table');
       const results = { 'results': (result) ? result.rows : null};
       res.render('pages/db', results );
