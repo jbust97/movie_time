@@ -2,12 +2,14 @@
     sequelize = null;
     if (process.env.HEROKU_POSTGRESQL_BRONZE_URL) {
             // the application is executed on Heroku ... use the postgres
-            sequelize = sequelize = new Sequelize(process.env.DATABASE_URL, {
-                logging: false,
-                dialectOptions: {
-                  ssl: true /* for SSL config since Heroku gives you this out of the box */
-                }
-              });
+                sequelize = new Sequelize(process.env.DATABASE_URL, 
+                  {
+                    logging: false,
+                    dialectOptions: {
+                      ssl: true /* for SSL config since Heroku gives you this out of the box */
+                    }
+                   }
+                );
     }
     else {
             // the application is executed on the local machine ... use mysql  
