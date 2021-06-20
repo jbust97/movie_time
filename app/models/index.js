@@ -8,7 +8,10 @@
                     protocol: 'postgres',
                     logging: false,
                     dialectOptions: {
-                      ssl: true /* for SSL config since Heroku gives you this out of the box */
+                      ssl: {
+                        require: true,
+                        rejectUnauthorized: false 
+                      }
                     }
                    }
                 );
