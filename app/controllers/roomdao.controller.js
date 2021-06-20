@@ -36,7 +36,7 @@ exports.findOne = (req, res) => {
 };
 
 exports.findAll = (req,res) => {
-    Room.findAll().then(data => {
+    Rooms.findAll().then(data => {
         res.send(data);
     }).catch(err => {
         res.status(500).send({
