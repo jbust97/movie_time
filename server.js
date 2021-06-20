@@ -1,9 +1,8 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const { Pool } = require('pg');
 const app = express();
-const db = require('./models');
+const db = require('./app/models');
 
 db.sequelize.sync({alter: true});
 //db.sequelize.sync({alter: true});
@@ -21,7 +20,7 @@ app.get("/", (req, res) => {
 });
 
 const PORT = process.env.PORT || 9090;
-
+require("./app/routes/room.routes")(app);
 app.listen(PORT,()=>{
     console.log("Servidor corriendo en el puerto 9090");
 });
