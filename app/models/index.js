@@ -1,6 +1,6 @@
-    var Sequelize = require("sequelize"),    
-    sequelize = null;
+    var Sequelize = require("sequelize"),sequelize = null;
     if (process.env.HEROKU) {
+          console.log("Estoy en Heroku")
             // the application is executed on Heroku ... use the postgres
                 sequelize = new Sequelize(process.env.DATABASE_URL, 
                   {
@@ -14,6 +14,7 @@
                 );
     }
     else {
+          console.log("No Estoy en Heroku")
             // the application is executed on the local machine ... use mysql  
             sequelize =new Sequelize("postgres://movie:party@localhost:5432/movie_party",  {dialect: "postgres"});
    }
