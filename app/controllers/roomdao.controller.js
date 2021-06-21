@@ -1,4 +1,5 @@
 const db = require("../models");
+const axios = require("axios");
 const Rooms = db.Rooms;
 const Op = db.Sequelize.Op;
 
@@ -75,4 +76,11 @@ exports.delete = (req,res) => {
     }).catch(err => {
         res.status(500).send("Error al eliminar el room con id: " + id);
     })
+}
+
+exports.query = async (req,res) => {
+    const title = req.query.title
+    const url = "http://www.omdbapi.com/";
+    const response = await axios.get(url,{params : {t: title, apikey: "7747d062",type: "movie"}});
+    res.send(response.data);
 }
