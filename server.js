@@ -31,10 +31,19 @@ const io = require('socket.io')(server,{
       }
 });
 socketIO.io = io;
-io.on('connection',()=>{
-    console.log("I'm connected to a socket!");
-})          
+socketIO.io.on('connection',(socket)=>{
+    socket.on("join", msg => {
+        socket.join(msg.roomCode);
+        console.log("Supposedly joined " + msg.roomCode)
+    });
+    
+
+});
+ 
+    
+    
 server.listen(PORT);
 
 
 require("./app/routes/room.routes")(app);
+require("./app/routes/movie.routes")(app);

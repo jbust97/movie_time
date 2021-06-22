@@ -26,4 +26,7 @@ const db = {}
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 db.Rooms = require("./room.model.js")(sequelize, Sequelize);
+db.Movies = require("./movie.model.js")(sequelize,Sequelize);
+db.Movies.belongsTo(db.Rooms);
+db.Rooms.hasMany(db.Movies);
 module.exports = db;

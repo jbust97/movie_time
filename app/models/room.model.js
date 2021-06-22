@@ -1,8 +1,9 @@
 module.exports = (sequelize, Sequelize) => {
     const Room = sequelize.define("Room", { 
-        nombre: {
+        code: {
             type: Sequelize.STRING,
-            allowNull: false
+            allowNull: true,
+
         },  
         id: {
             type: Sequelize.BIGINT,
