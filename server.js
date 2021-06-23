@@ -26,8 +26,8 @@ const PORT = process.env.PORT || 9090;
 const server = require('http').createServer(app);
 const io = require('socket.io')(server,{
     cors: {
-        origin: "*",
-        methods: ["GET","POST","PUT"]
+        origin: "https://jbust97.github.io",
+        methods: ["GET","POST"]
       }
 });
 socketIO.io = io;
