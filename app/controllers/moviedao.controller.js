@@ -8,7 +8,7 @@ const Op = db.Sequelize.Op;
 exports.create = async (req, res) => {
     
     const movie = {movie: req.body.movie, RoomId: req.body.RoomId}
-    const room = await Rooms.findByPk(movie.RoomId);
+    const room = await Rooms.findByPk(movie.RoomId);        
 
     // Guardamos a la base de datos  
     Movies.create(movie).then(data => {
@@ -57,14 +57,18 @@ exports.vote = async (req,res) => {
     try{
 
     
-    const movie = await Movies.findByPK(id)
+    const movie = await Movies.findByPk(id)
+    const room = await Rooms.findByPk(movie.RoomId)
     if(value == 1 || value == "1"){
-        movie.increment();
+        movie.increment("votes");
     }else{
-        movie.decrement();
+        movie.decrement("votes");
     }
-    res.status(200).ok()
+    socketIO.io.to(room.code).emit("update");
+    console.log("Broadcasting to room: "  + room.code);
+    res.status(200).send()
     }catch(e){
+        console.log(e)
         res.status(500).send("Error: Cannot register vote update");
     }
    

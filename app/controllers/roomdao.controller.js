@@ -3,6 +3,7 @@ const axios = require("axios");
 const socketIO = require("../websocket");
 
 const Rooms = db.Rooms;
+const Movies = db.Movies;
 const Op = db.Sequelize.Op;
 
 exports.create = (req, res) => {
@@ -83,10 +84,26 @@ exports.delete = (req,res) => {
 
 exports.query = async (req,res) => {
     const title = req.query.title
+    
     const url = "http://www.omdbapi.com/";
+    try{
     const response = await axios.get(url,{params : {t: title, apikey: "7747d062",type: "movie"}});
-
     res.send(response.data);
+    }catch(e){
+        res.status(500).send("Cannot get movies from external API");
+    }
+}
+
+exports.queryId = async (req,res) => {
+    const id = req.query.id
+    
+    const url = "http://www.omdbapi.com/";
+    try{
+    const response = await axios.get(url,{params : {i: id, apikey: "7747d062",type: "movie"}});
+    res.send(response.data);
+    }catch(e){
+        res.status(500).send("Cannot get movies from external API");
+    }
 
 }
 
@@ -106,4 +123,15 @@ exports.findByCode = (req,res) =>{
         }
     })
     .catch(err => res.status(500).send("Error retrieving room by code " + code))
+}
+
+exports.getMovies = async (req,res) => {
+    const id = req.params.id
+    try{
+        const movies = await Movies.findAll({where: {RoomId: id}, order: [['votes','DESC']]});
+        res.send(movies)
+    }catch(e){
+        console.log(e);
+        res.status("500").send("Cannot get the movies of the room")
+    }
 }

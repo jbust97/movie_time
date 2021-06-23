@@ -9,7 +9,7 @@ db.sequelize.sync({alter: true});
 //db.sequelize.sync({alter: true});
 
 var corsOptions = {
-    origin: "http://localhost:3000"
+    origin: "*"
 }
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
@@ -26,8 +26,8 @@ const PORT = process.env.PORT || 9090;
 const server = require('http').createServer(app);
 const io = require('socket.io')(server,{
     cors: {
-        origin: "http://localhost:3000",
-        methods: ["GET", "POST"]
+        origin: "*",
+        methods: ["GET", "POST","PUT"]
       }
 });
 socketIO.io = io;

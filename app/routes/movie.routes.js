@@ -6,7 +6,6 @@ module.exports = app => {
     router.get("/:id", movie.findOne);
     router.put("/:id",movie.vote);
     router.delete("/:id",movie.delete);
-    
     app.use('/api/movie', router);
     
 };
