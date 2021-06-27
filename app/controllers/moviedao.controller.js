@@ -9,7 +9,7 @@ exports.create = async (req, res) => {
     
     const movie = {movie: req.body.movie, RoomId: req.body.RoomId}
     const room = await Rooms.findByPk(movie.RoomId);        
-
+    
     // Guardamos a la base de datos  
     Movies.create(movie).then(data => {
         socketIO.io.to(room.code).emit("update");
@@ -35,7 +35,7 @@ exports.findOne = (req, res) => {
         }
     }).catch(err => {
         res.status(500).send({ 
-            message: "Error al obtener room con id=" + id
+            message: "Cannot create movie with id=" + id
         });
     });    
 };
@@ -45,7 +45,7 @@ exports.findAll = (req,res) => {
         res.send(data);
     }).catch(err => {
         res.status(500).send({
-            message: "Error al obtener todos las Rooom"
+            message: "Cannot get all movies"
         });
     });
 }
@@ -83,7 +83,7 @@ exports.delete = (req,res) => {
     }).then(data => {
         res.status(204).send();
     }).catch(err => {
-        res.status(500).send("Error al eliminar el room con id: " + id);
+        res.status(500).send("Cannot delete movie with id: " + id);
     })
 }
 

@@ -19,7 +19,7 @@ exports.create = (req, res) => {
     }).catch(err => {
         res.status(500).send({
             message:
-            err.message || "Ha ocurrido un error al crear una room."
+            err.message || "Cannot create room."
         }); 
     });
 };
@@ -35,7 +35,7 @@ exports.findOne = (req, res) => {
         }
     }).catch(err => {
         res.status(500).send({ 
-            message: "Error al obtener room con id=" + id
+            message: "Cannot get room with id=" + id
         });
     });    
 };
@@ -45,7 +45,7 @@ exports.findAll = (req,res) => {
         res.send(data);
     }).catch(err => {
         res.status(500).send({
-            message: "Error al obtener todos las Rooom"
+            message: "Cannot get all rooms"
         });
     });
 }
@@ -64,7 +64,7 @@ exports.update = (req,res) => {
         res.send(data);
     }).catch(err => {
         res.status(500).send({
-            message: "Error al actualizar el room con id: " + id
+            message: "Cannot update room with id: " + id
         })
     });
 }
@@ -78,7 +78,7 @@ exports.delete = (req,res) => {
     }).then(data => {
         res.status(204).send();
     }).catch(err => {
-        res.status(500).send("Error al eliminar el room con id: " + id);
+        res.status(500).send("Cannot delete room with id: " + id);
     })
 }
 
@@ -87,7 +87,7 @@ exports.query = async (req,res) => {
     
     const url = "http://www.omdbapi.com/";
     try{
-    const response = await axios.get(url,{params : {t: title, apikey: "7747d062",type: "movie"}});
+    const response = await axios.get(url,{params : {t: title, apikey: process.env["API_KEY"],type: "movie"}});
     res.send(response.data);
     }catch(e){
         res.status(500).send("Cannot get movies from external API");
@@ -99,7 +99,7 @@ exports.queryId = async (req,res) => {
     
     const url = "http://www.omdbapi.com/";
     try{
-    const response = await axios.get(url,{params : {i: id, apikey: "7747d062",type: "movie"}});
+    const response = await axios.get(url,{params : {i: id, apikey: process.env["API_KEY"],type: "movie"}});
     res.send(response.data);
     }catch(e){
         res.status(500).send("Cannot get movies from external API");
